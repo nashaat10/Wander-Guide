@@ -1,7 +1,7 @@
 const Tour = require("../models/tourModel");
 const APIFeatures = require("../utils/apiFeatures");
 
-// middeleware to get top 5 cheap tours
+// middleware to get top 5 cheap tours
 exports.aliasTopTour = (req, res, next) => {
   req.query.limit = "5";
   req.query.sort = "-ratingAverage,price";
@@ -107,42 +107,6 @@ exports.deleteTour = async (req, res) => {
     });
   }
 };
-// exports.getTourStats = async (req, res) => {
-//   try {
-//     const stats = await Tour.aggregate([
-//       ({
-//         $match: { ratingsAverage: { $gte: 4.5 } },
-//       },
-//       {
-//         $group: {
-//           _id: null,
-//           num: { $sum: 1 },
-//           numRatings: { $sum: "$rstingsQuantity" },
-//           avgRating: { $avg: "$ratingsAverage" },
-//           avgPrice: { $avg: "$price" },
-//           minPrice: { $min: "$price" },
-//           maxPrice: { $max: "$price" },
-//         },
-//       }),
-
-//       // {
-//       //     $match: { _id: { $ne: 'EASY' } },
-//       // },
-//     ]);
-
-//     res.status(200).json({
-//       status: "success",
-//       data: {
-//         stats,
-//       },
-//     });
-//   } catch (error) {
-//     res.status(404).json({
-//       status: "fail",
-//       message: error,
-//     });
-//   }
-// };
 
 exports.getTourStats = async (req, res) => {
   try {
