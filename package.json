@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "delete:data": "node ./Natours/data/import-dev-data.js --delete",
+    "import:data": "node ./Natours/data/import-dev-data.js --import"
   },
   "keywords": [],
   "author": "",
