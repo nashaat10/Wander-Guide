@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const tourRouter = require("./Natours/routes/tourRoutes");
 const userRouter = require("./Natours/routes/userRoutes");
 
-// 1) Middelware
+// 1) Middleware
 app.use(express.json());
 app.use(morgan("dev"));
 // if (process.env.NODE_ENV === "development") {
@@ -37,5 +37,3 @@ app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 
 module.exports = app;
-
-//4) strat the server
