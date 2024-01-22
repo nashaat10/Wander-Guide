@@ -26,8 +26,10 @@ const importData = async () => {
   try {
     await Tour.create(tours);
     console.log("Data loaded successfuly");
+    process.exit(1);
   } catch (err) {
     console.log(err);
+    process.exit(1);
   }
 };
 
@@ -35,8 +37,10 @@ const deleteData = async () => {
   try {
     await Tour.deleteMany();
     console.log("Data deleted successfuly");
+    process.exit(1);
   } catch (err) {
     console.log(err);
+    process.exit(1);
   }
 };
 
