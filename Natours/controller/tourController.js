@@ -111,7 +111,7 @@ exports.deleteTour = async (req, res) => {
 exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
-      ({
+      {
         $match: { ratingsAverage: { $gte: 4.5 } },
       },
       {
@@ -124,7 +124,7 @@ exports.getTourStats = async (req, res) => {
           minPrice: { $min: "$price" },
           maxPrice: { $max: "$price" },
         },
-      }),
+      },
       {
         $sort: { avgPrice: 1 },
       },
@@ -134,6 +134,61 @@ exports.getTourStats = async (req, res) => {
       results: "success",
       data: {
         stats,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+exports.getMonthlyPlan = async (req, res) => {
+  try {
+    const year = req.params.year * 1;
+
+    const plan = await Tour.aggregate([
+      {
+        $unwind: "$startDates",
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: "$startDates" },
+          numTourStarts: { $sum: 1 },
+          Tours: { $push: "$name" },
+        },
+      },
+      {
+        $addFields: { month: "$_id" },
+      },
+      {
+        // used to make a field not appear
+        $project: {
+          _id: 0,
+        },
+      },
+      {
+        $sort: { numTourStarts: -1 },
+      },
+      {
+        // used to limit the number of docs that appears
+        $limit: 12,
+      },
+    ]);
+
+    res.json({
+      result: "success",
+      data: {
+        plan,
       },
     });
   } catch (err) {
