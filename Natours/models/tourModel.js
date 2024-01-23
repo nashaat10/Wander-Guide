@@ -96,7 +96,14 @@ tourSchema.pre(/^find/, function (next) {
 // post middleware runs after the query has executed
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`Query took ${Date.now() - this.start} millisecond`);
-  console.log(docs);
+  next();
+});
+
+//Aggregation Middleware
+
+tourSchema.pre("aggregate", function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); // unshift -> add element at the beginning of an array
+  console.log(this.pipeline());
   next();
 });
 const Tour = mongoose.model("Tour", tourSchema);
