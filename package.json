@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "delete:data": "node ./Natours/data/import-dev-data.js --delete",
-    "import:data": "node ./Natours/data/import-dev-data.js --import"
+    "import:data": "node ./Natours/data/import-dev-data.js --import",
+    "debug": "ndb server.js"
   },
   "keywords": [],
   "author": "",
