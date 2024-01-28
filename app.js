@@ -14,16 +14,11 @@ app.use(morgan("dev"));
 app.use(express.static("./Natours/public"));
 
 app.use((req, res, next) => {
-  console.log("hello from the middelware ");
-  next();
-});
-
-app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
-// 2) Route Handeller
+// 2) Route Handler
 
 // app.delete("/api/v1/tours/:id", deleteTour);
 // app.get("/api/v1/tours", getAllTours);
@@ -35,5 +30,13 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
+
+// all is used to handel all the http methods in one time
+app.all("*", (req, res, next) => {
+  res.status(404).json({
+    status: "fail",
+    message: `cant find${req.originalUrl} on this server`,
+  });
+});
 
 module.exports = app;
