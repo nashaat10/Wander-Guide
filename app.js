@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+const AppError = require("./Natours/utils/appError");
+const globalErrorHandler = require("./Natours/controller/errorController");
 const tourRouter = require("./Natours/routes/tourRoutes");
 const userRouter = require("./Natours/routes/userRoutes");
 
@@ -33,10 +35,10 @@ app.use("/api/v1/users", userRouter);
 
 // all is used to handel all the http methods in one time
 app.all("*", (req, res, next) => {
-  res.status(404).json({
-    status: "fail",
-    message: `cant find${req.originalUrl} on this server`,
-  });
+  next(new AppError(`cant find ${req.originalUrl} on this server`, 404));
 });
+
+// global error handling middleware
+app.use(globalErrorHandler);
 
 module.exports = app;
