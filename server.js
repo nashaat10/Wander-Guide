@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./Natours/config.env" });
 const app = require("./app");
 // console.log(app.get("env"));
-
 const DB = process.env.DATABASE;
 
 // console.log(DB);
