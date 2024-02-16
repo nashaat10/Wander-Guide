@@ -7,7 +7,8 @@
     "start": "nodemon server.js",
     "delete:data": "node ./Natours/data/import-dev-data.js --delete",
     "import:data": "node ./Natours/data/import-dev-data.js --import",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "start:prod": "set NODE_ENV=production&& node server.js"
   },
   "keywords": [],
   "author": "",
