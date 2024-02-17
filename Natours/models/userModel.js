@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -30,6 +31,16 @@ const userSchema = new mongoose.Schema({
     },
   },
   photo: String,
+});
+
+// Document Middleware: runs before .save() and .create()
+userSchema.pre("save", async function (next) {
+  // only run this function if password was actually modified
+  if (!this.isModified("password")) return next();
+  // hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+  // delete passwordConfirm field from the database
+  this.passwordConfirm = undefined;
 });
 
 const User = mongoose.model("User", userSchema);
