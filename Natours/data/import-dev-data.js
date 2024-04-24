@@ -18,9 +18,7 @@ mongoose
   })
   .then(() => console.log("DB connection is done"));
 
-const tours = JSON.parse(
-  fs.readFileSync("./Natours/data/tours-simple.json", "utf-8")
-);
+const tours = JSON.parse(fs.readFileSync("./Natours/data/tours.json", "utf-8"));
 
 const importData = async () => {
   try {
