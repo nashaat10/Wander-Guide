@@ -158,6 +158,15 @@ tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
+// Populate Middleware
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "guides",
+    select: "-__v -passwordChangedAt",
+  });
+  next();
+});
+
 //Aggregation Middleware
 // next => means that the middleware is finished and the next middleware can start
 tourSchema.pre("aggregate", function (next) {
