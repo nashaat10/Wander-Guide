@@ -7,7 +7,7 @@ const reviewSchema = new mongoose.Schema(
       required: [true, "Review can not be empty"],
     },
     rating: {
-      type: number,
+      type: Number,
       nim: 1,
       max: 5,
       required: [true, "Review must have a rating."],
@@ -35,4 +35,4 @@ const reviewSchema = new mongoose.Schema(
 
 const Review = mongoose.model("Review", reviewSchema);
 
-model.exports = Review;
+module.exports = Review;

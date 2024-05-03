@@ -11,7 +11,7 @@ const AppError = require("./Natours/utils/appError");
 const globalErrorHandler = require("./Natours/controller/errorController");
 const tourRouter = require("./Natours/routes/tourRoutes");
 const userRouter = require("./Natours/routes/userRoutes");
-
+const reviewRouter = require("./Natours/routes/reviewRoutes");
 // 1) Global Middleware
 
 // set security http headers
@@ -67,6 +67,7 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter);
 
 // all is used to handel all the http methods in one time
 app.all("*", (req, res, next) => {
