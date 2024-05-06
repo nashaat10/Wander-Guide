@@ -9,23 +9,15 @@ router.post("/login", authController.login);
 router.post("/forgotPassword", authController.forgotPassword);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
-router.patch(
-  "/updateMyPassword",
-  authController.protect,
-  authController.updatePassword
-);
+router.use(authController.protect);
 
+router.patch("/updateMyPassword", authController.updatePassword);
 // get current user who is logged in
-router.get(
-  "/me",
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
+router.get("/me", userController.getMe, userController.getUser);
+router.patch("/updateMe", userController.updateMe);
+router.delete("/deleteMe", userController.deleteMe);
 
-router.patch("/updateMe", authController.protect, userController.updateMe);
-router.delete("/deleteMe", authController.protect, userController.deleteMe);
-
+router.use(authController.restrictTo("admin"));
 router
   .route("/")
   .get(userController.getAllUsers)
@@ -35,6 +27,6 @@ router
   .route("/:id")
   .get(userController.getUser)
   .patch(userController.updateUser)
-  .delete(authController.protect, userController.deleteUser);
+  .delete(userController.deleteUser);
 
 module.exports = router;
