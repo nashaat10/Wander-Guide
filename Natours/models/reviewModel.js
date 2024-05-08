@@ -62,12 +62,19 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
       },
     },
   ]);
-  console.log(stats);
   // Update the tour document with the new stats
-  await Tour.findByIdAndUpdate(tourId, {
-    ratingsQuantity: stats[0].nRating,
-    ratingsAverage: stats[0].avgRating,
-  });
+
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: stats[0].nRating,
+      ratingsAverage: stats[0].avgRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: 0,
+      ratingsAverage: 4.5,
+    });
+  }
 };
 
 // Call calcAverageRatings after a review is saved
@@ -75,6 +82,18 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
 // this.constructor points to the model that created the document (the current document)
 reviewSchema.post("save", function () {
   this.constructor.calcAverageRatings(this.tour);
+});
+
+// to update  ratings when a review is updated or deleted
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+  this.r = await this.findOne(); // retrieve the current document from the database and store it in the query variable r to get access to it in the post middleware
+  next();
+  // we did not use callAverageRatings here because we need to wait for the query to execute  and  update the ratings
+});
+
+reviewSchema.post(/^findOneAnd/, async function () {
+  // this.r = await this.findOne(); does NOT work here, query has already executed
+  await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
 const Review = mongoose.model("Review", reviewSchema);
