@@ -120,6 +120,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// Indexing (to make the search faster) and making it on the fields that are used frequently
 tourSchema.index({ price: 1, ratingsAverage: -1 }); // 1 -> ascending order, -1 -> descending order
 tourSchema.index({ slug: 1 });
 
@@ -127,7 +128,7 @@ tourSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
 });
 
-// Virtual populates
+// Virtual populates (to populate reviews in the tour model)
 tourSchema.virtual("reviews", {
   ref: "Review",
   foreignField: "tour",
