@@ -124,6 +124,7 @@ const tourSchema = new mongoose.Schema(
 // Indexing (to make the search faster) and making it on the fields that are used frequently
 tourSchema.index({ price: 1, ratingsAverage: -1 }); // 1 -> ascending order, -1 -> descending order
 tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: "2dsphere" }); // 2dsphere -> used for geospatial data
 
 tourSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
