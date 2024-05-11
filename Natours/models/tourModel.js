@@ -180,7 +180,7 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-//Aggregation Middleware
+// Aggregation Middleware
 // next => means that the middleware is finished and the next middleware can start
 tourSchema.pre("aggregate", function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); // unshift -> add element at the beginning of an array
