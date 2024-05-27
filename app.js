@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -12,8 +13,12 @@ const globalErrorHandler = require("./Natours/controller/errorController");
 const tourRouter = require("./Natours/routes/tourRoutes");
 const userRouter = require("./Natours/routes/userRoutes");
 const reviewRouter = require("./Natours/routes/reviewRoutes");
-// 1) Global Middleware
 
+// pug template engine
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+
+// 1) Global Middlewares
 // set security http headers
 app.use(helmet());
 
@@ -64,6 +69,13 @@ app.use((req, res, next) => {
 });
 
 // 3) Routes
+
+app.get("/", (req, res) => {
+  res.status(200).render("base", {
+    tour: "The Forest Hiker",
+    user: "Mohamed",
+  });
+});
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
