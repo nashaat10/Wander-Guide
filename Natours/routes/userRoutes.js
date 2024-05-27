@@ -1,6 +1,10 @@
 const express = require("express");
+const multer = require("multer");
 const userController = require("../controller/userController");
 const authController = require("../controller/authController");
+
+// multer storage engine  to store the file in memory
+const upload = multer({ dest: "public/img/users" });
 
 const router = express.Router();
 
@@ -14,7 +18,7 @@ router.use(authController.protect);
 router.patch("/updateMyPassword", authController.updatePassword);
 // get current user who is logged in
 router.get("/me", userController.getMe, userController.getUser);
-router.patch("/updateMe", userController.updateMe);
+router.patch("/updateMe", upload.single("photo"), userController.updateMe);
 router.delete("/deleteMe", userController.deleteMe);
 
 router.use(authController.restrictTo("admin"));
