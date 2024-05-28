@@ -3,17 +3,21 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const factory = require("./handlerFactory");
 const multer = require("multer");
+const sharp = require("sharp");
 
 // multer.diskStorage() is used to store the file in the disk storage
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/img/users");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1]; // mimetype is used to get the extension of the file like jpeg, jpg, png etc
-    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-  },
-});
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/img/users");
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split("/")[1]; // mimetype is used to get the extension of the file like jpeg, jpg, png etc
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+// multer.memoryStorage() is used to store the file in the memory storage
+const multerStorage = multer.memoryStorage();
 
 // multer filter to check if the file is an image
 const multerFilter = (req, file, cb) => {
@@ -31,6 +35,21 @@ const upload = multer({
 });
 
 exports.uploadUserPhoto = upload.single("photo");
+
+// resize the user photo
+exports.resizeUserPhoto = (req, res, next) => {
+  if (!req.file) return next();
+
+  // save the file name in the req.file.filename because the photo stored in memory not in disk storage because we will use it in the updateMe function
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+  next();
+};
 
 // filter out unwanted fields names that are not allowed to be updated
 const filterObj = (obj, ...allowedFields) => {
