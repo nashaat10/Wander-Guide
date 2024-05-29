@@ -37,19 +37,21 @@ const upload = multer({
 exports.uploadUserPhoto = upload.single("photo");
 
 // resize the user photo
-exports.resizeUserPhoto = (req, res, next) => {
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
 
   // save the file name in the req.file.filename because the photo stored in memory not in disk storage because we will use it in the updateMe function
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(`public/img/users/${req.file.filename}`);
   next();
-};
+});
+
+//
 
 // filter out unwanted fields names that are not allowed to be updated
 const filterObj = (obj, ...allowedFields) => {
