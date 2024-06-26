@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const bookingSchema = new Schema({
+const bookingSchema = new mongoose.Schema({
   tour: {
     type: mongoose.Schema.ObjectId,
     ref: "Tour",
