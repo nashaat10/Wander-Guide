@@ -1,7 +1,6 @@
 Wander Guide<a name="TOP"></a>
 ===================
 
-- - - - 
 # Description #
 Wander Guide is a tour booking website that allows users to book tours and manage their bookings. It is built using Node.js, Express, MongoDB
 
