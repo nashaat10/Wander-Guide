@@ -22,7 +22,7 @@ Wander Guide is a tour booking website that allows users to book tours and manag
 13. Advanced mongoose features
 14. Image processing with sharp
 15. And much more!
-# APIs #
+# APIs # 
 Auth:
 ~~~
 /api/v1/users/signup [POST]
