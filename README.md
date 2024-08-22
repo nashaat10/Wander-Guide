@@ -7,7 +7,7 @@ Wander Guide is a tour booking website that allows users to book tours and manag
 
 # Features #
 
-1. protected routes, authentication, authorization, security, payments, and more.
+1. protected routes, authentication, authorization, security, payments, and more. 
 2. MVC architecture
 3. RESTful API
 4. CRUD operations
