@@ -1,4 +1,3 @@
-version: "3.7"
 services:
   node-app:
     container_name: wonder-guide-container
