@@ -5,3 +5,4 @@ services:
       - ./Natours:/app/src:ro
     environment:
       - NODE_ENV=development
+    command: npm start
