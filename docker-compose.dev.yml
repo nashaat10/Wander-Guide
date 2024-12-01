@@ -1,0 +1,5 @@
+version: "3.7"
+services:
+  node-app:
+    volumes: -./Natours:/app/src:ro
+    environment: -NODE_ENV = development
