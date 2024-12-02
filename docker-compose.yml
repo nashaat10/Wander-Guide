@@ -1,7 +1,6 @@
 services:
   node-app:
     container_name: wonder-guide-container
-    build: .
     ports:
       - "2000:2000"
     env_file:
