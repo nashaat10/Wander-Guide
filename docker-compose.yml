@@ -5,3 +5,10 @@ services:
       - "2000:2000"
     env_file:
       - ./Natours/config.env
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "rootpassword"

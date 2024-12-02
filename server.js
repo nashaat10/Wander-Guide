@@ -10,7 +10,11 @@ process.on("uncaughtException", (err) => {
 });
 
 // console.log(app.get("env"));
-const DB = process.env.DATABASE;
+// const DB = process.env.DATABASE;
+const db_username = process.env.DATABASE_USERNAME;
+const db_password = process.env.DATABASE_PASSWORD;
+// const DB = `mongodb://${db_username}:${db_password}@mongo:27017/natours`;
+const DB = `mongodb://mongo:27017/natours`;
 
 // console.log(DB);
 mongoose
