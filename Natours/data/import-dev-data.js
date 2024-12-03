@@ -8,7 +8,11 @@ const Review = require("../models/reviewModel");
 
 dotenv.config({ path: "./Natours/config.env" });
 
-const DB = process.env.DATABASE;
+// const DB = process.env.DATABASE;
+
+const db_username = process.env.DATABASE_USERNAME;
+const db_password = process.env.DATABASE_PASSWORD;
+const DB = `mongodb://${db_username}:${db_password}@mongo:27017`;
 
 // console.log(DB);
 mongoose
