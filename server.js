@@ -14,7 +14,7 @@ process.on("uncaughtException", (err) => {
 const db_username = process.env.DATABASE_USERNAME;
 const db_password = process.env.DATABASE_PASSWORD;
 const DB = `mongodb://${db_username}:${db_password}@mongo:27017`;
-console.log("DB:", DB);
+// console.log("DB:", DB);
 // const DB = `mongodb://mongo:27017/natours`;
 
 // console.log(DB);
